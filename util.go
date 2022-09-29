@@ -111,10 +111,10 @@ func smallestUncovered(c [][]int, covR []int, covC []int) int {
 
 func subSmallestUnc(c [][]int, s int, covC []int) [][]int {
 
-	for _, r := range c {
+	for i, r := range c {
 		for j, v := range r {
 			if covC[j] != 1 {
-				v = v - s
+				c[i][j] = v - s
 			}
 		}
 	}
