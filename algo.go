@@ -1,8 +1,15 @@
 package hungarianAlgolang
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+)
 
-func solve(m [][]int) []int {
+func solve(m [][]int) ([]int, error) {
+	v, err := validate(m)
+	if err != 0 {
+		log.Fatal(v)
+	}
 	original := copyMatrix(m)
 
 	costs := m
@@ -116,5 +123,5 @@ Reentry:
 		}
 	}
 
-	return result
+	return result, nil
 }
