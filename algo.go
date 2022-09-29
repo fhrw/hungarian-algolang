@@ -3,6 +3,7 @@ package hungarianAlgolang
 import "fmt"
 
 func solve(m [][]int) []int {
+	original := copyMatrix(m)
 
 	costs := m
 	mask := make([][]int, len(m))
@@ -47,7 +48,7 @@ Reentry:
 				for i, r := range mask {
 					for j, v := range r {
 						if v == 1 {
-							result = append(result, costs[i][j])
+							result = append(result, original[i][j])
 						}
 					}
 				}

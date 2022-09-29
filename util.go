@@ -38,6 +38,18 @@ func getCol(j int, m [][]int) []int {
 
 }
 
+func copyMatrix(m [][]int) [][]int {
+	copy := [][]int{}
+	for i, r := range m {
+		row := []int{}
+		for j, v := range r {
+			row = append(row, v)
+		}
+		copy = append(copy, row)
+	}
+	return copy
+}
+
 // relating to step 1
 func subtractSmallest(m [][]int) [][]int {
 
