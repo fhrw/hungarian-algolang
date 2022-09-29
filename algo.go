@@ -94,23 +94,18 @@ Reentry:
 		case 5:
 			fmt.Println("step5")
 			s := starPrimeSeries(starPrimeStart[0], starPrimeStart[1], mask)
-			if len(s) > 1 {
-				for i, v := range s {
-					if i%2 == 0 {
-						mask[v[0]][v[1]] = 1
-					} else {
-						mask[v[0]][v[1]] = 0
-					}
-				}
-			} else {
-				for i, r := range mask {
-					for j := range r {
-						if s[0][0] != i && s[0][1] != j {
-							mask[i][j] = 0
-						}
-					}
+			// REDO!!!!
+			for i, r := range mask {
+				for j := range r {
+					mask[i][j] = 0
 				}
 			}
+			for i, v := range s {
+				if i%2 == 0 {
+					mask[v[0]][v[1]] = 1
+				}
+			}
+
 			for i := range covR {
 				covR[i] = 0
 				covC[i] = 0
