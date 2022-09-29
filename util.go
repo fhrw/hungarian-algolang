@@ -40,9 +40,9 @@ func getCol(j int, m [][]int) []int {
 
 func copyMatrix(m [][]int) [][]int {
 	copy := [][]int{}
-	for i, r := range m {
+	for _, r := range m {
 		row := []int{}
-		for j, v := range r {
+		for _, v := range r {
 			row = append(row, v)
 		}
 		copy = append(copy, row)
