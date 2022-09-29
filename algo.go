@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-func solve(m [][]int) ([]int, error) {
+func Solve(m [][]int) ([]int, error) {
 	v, err := validate(m)
 	if err != 0 {
 		log.Fatal(v)
