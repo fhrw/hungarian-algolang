@@ -135,15 +135,15 @@ func hasUncZero(c [][]int, covC []int) bool {
 	return false
 }
 
-func rowHasStar(r []int) bool {
+func rowHasStar(r []int) (bool, int) {
 
-	for _, v := range r {
+	for i, v := range r {
 		if v == 1 {
-			return true
+			return true, i
 		}
 	}
 
-	return false
+	return false, -1
 }
 
 func getRowPrime(s []int) int {

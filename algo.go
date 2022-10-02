@@ -94,15 +94,16 @@ Reentry:
 		case 5:
 			fmt.Println("step5")
 			s := starPrimeSeries(starPrimeStart[0], starPrimeStart[1], mask)
-			// REDO!!!!
-			for i, r := range mask {
-				for j := range r {
-					mask[i][j] = 0
-				}
-			}
+			// BUG: Should only unstar stars in the series
+			// leave the other ones alone...
+			// FIX: check prime rows for stars and unstar them
 			for i, v := range s {
 				if i%2 == 0 {
 					mask[v[0]][v[1]] = 1
+					check, starIdx := rowHasStar(mask[v[0]])
+					if check {
+						mask[v[0]][starIdx] = 0
+					}
 				}
 			}
 
