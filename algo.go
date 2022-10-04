@@ -11,6 +11,7 @@ func Solve(m [][]int) ([]int, error) {
 		log.Fatal(v)
 	}
 	original := copyMatrix(m)
+	_ = original
 
 	costs := m
 	mask := make([][]int, len(m))
@@ -52,10 +53,10 @@ Reentry:
 			}
 			numCov := arrSum(covC)
 			if numCov == len(costs) {
-				for i, r := range mask {
+				for _, r := range mask {
 					for j, v := range r {
 						if v == 1 {
-							result = append(result, original[i][j])
+							result = append(result, j)
 						}
 					}
 				}
@@ -66,28 +67,33 @@ Reentry:
 
 		case 4:
 			fmt.Println("step4")
-			// pre-process to make sure there are uncovered zeros
-			uncZero := hasUncZero(costs, covC)
-			if !uncZero {
-				minUnc = smallestUncovered(costs, covR, covC)
-				costs = subSmallestUnc(costs, minUnc, covC)
-			}
-			// step 4 proper
-			for i, r := range costs {
-				for j, v := range r {
-					if v == 0 && covC[j] != 1 {
-						mask[i][j] = 2
-						if !rowHasStar(r) {
-							step = 5
-							starPrimeStart = []int{i, j}
-							goto Reentry
-						} else {
-							covR[i] = 1
-							covC[j] = 0
+			// find an uncovered zero and prime it
+			// If there are no uncovered zeros this should go to step 6
+			// if there are this will have to go through till there are none
+			// left uncovered.
+			uncZero := hasUncZero(costs, covR, covC)
+
+			// while there are uncovered zreos
+			for uncZero {
+				for i, r := range costs {
+					for j, v := range r {
+						if v == 0 && covR[i] == 0 && covC[j] == 0 {
+							mask[i][j] = 2
+							check, idx := rowHasStar(mask[i])
+							if check {
+								covR[i] = 1
+								covC[idx] = 0
+							} else {
+								starPrimeStart = []int{i, j}
+								step = 5
+								goto Reentry
+							}
 						}
 					}
 				}
+				uncZero = hasUncZero(costs, covR, covC)
 			}
+
 			minUnc = smallestUncovered(costs, covR, covC)
 			step = 6
 
@@ -98,12 +104,12 @@ Reentry:
 			// leave the other ones alone...
 			// FIX: check prime rows for stars and unstar them
 			for i, v := range s {
-				if i%2 == 0 {
-					mask[v[0]][v[1]] = 1
+				if (i % 2) == 0 {
 					check, starIdx := rowHasStar(mask[v[0]])
 					if check {
 						mask[v[0]][starIdx] = 0
 					}
+					mask[v[0]][v[1]] = 1
 				}
 			}
 

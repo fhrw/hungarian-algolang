@@ -122,11 +122,11 @@ func subSmallestUnc(c [][]int, s int, covC []int) [][]int {
 	return c
 }
 
-func hasUncZero(c [][]int, covC []int) bool {
+func hasUncZero(c [][]int, covR []int, covC []int) bool {
 
-	for _, r := range c {
+	for i, r := range c {
 		for j, v := range r {
-			if covC[j] != 1 && v == 0 {
+			if covC[j] != 1 && covR[i] != 1 && v == 0 {
 				return true
 			}
 		}
