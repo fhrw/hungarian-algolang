@@ -8,7 +8,7 @@ import (
 func Solve(m [][]int) ([]int, error) {
 	v, err := validate(m)
 	if err != 0 {
-		log.Fatal(v)
+		log.Fatal(v, err)
 	}
 	original := copyMatrix(m)
 	_ = original
